@@ -1,0 +1,26 @@
+---
+const { productTitle, productDescription, productPrice, quantity, lineId, productImage } = Astro.props
+---
+
+<div class="card w-full card-sm cart-item" data-line-id={lineId}>
+  <div class="card-body p-3 sm:p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-[35%_65%] md:grid-cols-[30%_70%] gap-3 sm:gap-4">
+      <div class="w-full">
+        <img class="w-full aspect-square object-cover" src={productImage || "https://placehold.co/400x600"} alt={productTitle}>
+      </div>
+      <div class="flex flex-col gap-2">
+        <h2 class="card-title text-base sm:text-lg">{productTitle}</h2>
+        <p class="text-xs sm:text-sm text-gray-600 line-clamp-2">{productDescription}</p>
+        <p class="font-bold text-sm sm:text-base">{productPrice}</p>
+        <div class="flex items-center gap-2 sm:gap-3 mt-auto">
+          <p class="text-xs sm:text-sm">Quantity:</p>
+          <div class="flex gap-2 items-center">
+            <button class="btn btn-xs sm:btn-sm btn-circle btn-primary quantity-decrease" data-line-id={lineId}>-</button>
+            <p class="quantity-display min-w-6 text-center font-semibold">{quantity}</p>
+            <button class="btn btn-xs sm:btn-sm btn-circle btn-primary quantity-increase" data-line-id={lineId}>+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

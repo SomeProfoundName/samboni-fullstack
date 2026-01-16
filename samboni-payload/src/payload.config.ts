@@ -8,6 +8,9 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 
+import { shopifyEndpoints } from './endpoints/shopify'
+import { shopifyCartEndpoints } from './endpoints/shopifyCart'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -24,6 +27,22 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  cors: [
+    'http://localhost:4321',
+    'http://localhost:4322',
+    'http://localhost:4323',
+    process.env.FRONTEND_URL || '',
+  ].filter(Boolean),
+  csrf: [
+    'http://localhost:4321',
+    'http://localhost:4322',
+    'http://localhost:4323',
+    process.env.FRONTEND_URL || '',
+  ].filter(Boolean),
+  endpoints: [
+    ...shopifyEndpoints,
+    ...shopifyCartEndpoints,
+  ],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),

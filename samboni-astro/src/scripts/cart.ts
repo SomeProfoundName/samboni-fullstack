@@ -8,10 +8,15 @@
     productPrice: string,
     quantity: number,
     lineId: string,
-    productImage: string
+    productImage: string,
+    quantityAvailable: number = 999
   ): string {
+    const isAtLimit = quantity >= quantityAvailable;
+    const increaseButtonDisabled = isAtLimit ? 'disabled' : '';
+    const increaseButtonClass = isAtLimit ? 'btn-disabled' : 'btn-primary';
+
     return `
-      <div class="card w-full card-sm cart-item" data-line-id="${lineId}">
+      <div class="card w-full card-sm cart-item" data-line-id="${lineId}" data-quantity-available="${quantityAvailable}">
         <div class="card-body p-3 sm:p-4">
           <div class="grid grid-cols-1 sm:grid-cols-[35%_65%] md:grid-cols-[30%_70%] gap-3 sm:gap-4">
             <div class="w-full">
@@ -23,10 +28,16 @@
               <p class="font-bold text-sm sm:text-base">${productPrice}</p>
               <div class="flex items-center gap-2 sm:gap-3 mt-auto">
                 <p class="text-xs sm:text-sm">Quantity:</p>
-                <div class="flex gap-2 items-center">
-                  <button class="btn btn-xs sm:btn-sm btn-circle btn-primary quantity-decrease" data-line-id="${lineId}">-</button>
-                  <p class="quantity-display min-w-6 text-center font-semibold">${quantity}</p>
-                  <button class="btn btn-xs sm:btn-sm btn-circle btn-primary quantity-increase" data-line-id="${lineId}">+</button>
+                <div class="flex flex-col gap-1">
+                  <div class="flex gap-2 items-center">
+                    ${quantity === 1
+                      ? `<button class="btn btn-xs sm:btn-sm rounded-full btn-error text-white remove-item" data-line-id="${lineId}">Remove from cart</button>`
+                      : `<button class="btn btn-xs sm:btn-sm rounded-full btn-primary quantity-decrease" data-line-id="${lineId}">-</button>`
+                    }
+                    <p class="quantity-display min-w-6 text-center font-semibold">${quantity}</p>
+                    <button class="btn btn-xs sm:btn-sm rounded-full ${increaseButtonClass} quantity-increase" data-line-id="${lineId}" ${increaseButtonDisabled}>+</button>
+                  </div>
+                  ${isAtLimit ? `<p class="text-xs text-warning">Max stock: ${quantityAvailable}</p>` : ''}
                 </div>
               </div>
             </div>
@@ -74,6 +85,7 @@
         const product = item.merchandise.product;
         const price = item.merchandise.priceV2;
         const imageUrl = product.featuredImage?.url || 'https://placehold.co/600x400';
+        const quantityAvailable = item.merchandise.quantityAvailable || 999;
 
         return generateCartItemHTML(
           product.title,
@@ -81,7 +93,8 @@
           `${price?.currencyCode || ''} ${price?.amount || '0.00'}`,
           item.quantity,
           item.id,
-          imageUrl
+          imageUrl,
+          quantityAvailable
         );
       }).join('');
 
@@ -134,6 +147,35 @@
     }
   }
 
+  // Remove an item from the cart
+  async function removeFromCart(lineId: string) {
+    if (!cartId) return;
+
+    try {
+      const response = await fetch(`${PAYLOAD_URL}/api/shopify/cart/remove`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cartId,
+          lineIds: [lineId]
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to remove item');
+      }
+
+      // Refresh cart UI after removal
+      await updateCartUI();
+
+    } catch (error) {
+      console.error('Remove item error:', error);
+      alert('Failed to remove item from cart');
+    }
+  }
+
   // Handle quantity increase/decrease button clicks
   document.addEventListener('click', async (e) => {
     const target = e.target as HTMLElement;
@@ -143,11 +185,18 @@
       const lineId = target.dataset.lineId;
       if (!lineId) return;
 
-      const cartItem = target.closest('.cart-item');
+      const cartItem = target.closest('.cart-item') as HTMLElement;
       const quantityDisplay = cartItem?.querySelector('.quantity-display');
       if (!quantityDisplay) return;
 
       const currentQuantity = parseInt(quantityDisplay.textContent || '0');
+      const quantityAvailable = parseInt(cartItem?.dataset.quantityAvailable || '999');
+
+      // Check if we're at the stock limit
+      if (currentQuantity >= quantityAvailable) {
+        return; // Don't allow increasing beyond available stock
+      }
+
       await updateQuantity(lineId, currentQuantity + 1);
       return;
     }
@@ -165,6 +214,15 @@
       if (currentQuantity > 1) {
         await updateQuantity(lineId, currentQuantity - 1);
       }
+      return;
+    }
+
+    // Handle remove item
+    if (target.classList.contains('remove-item')) {
+      const lineId = target.dataset.lineId;
+      if (!lineId) return;
+
+      await removeFromCart(lineId);
       return;
     }
   });

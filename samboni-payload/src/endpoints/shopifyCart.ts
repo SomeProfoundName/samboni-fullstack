@@ -85,6 +85,7 @@ export const shopifyCartEndpoints: Endpoint[] = [
                                                         amount
                                                         currencyCode
                                                     }
+                                                    quantityAvailable
                                                     product {
                                                         title
                                                         featuredImage {
@@ -179,6 +180,7 @@ export const shopifyCartEndpoints: Endpoint[] = [
                                                         amount
                                                         currencyCode
                                                     }
+                                                    quantityAvailable
                                                     product {
                                                         title
                                                         featuredImage {
@@ -269,6 +271,7 @@ export const shopifyCartEndpoints: Endpoint[] = [
                                                         amount
                                                         currencyCode
                                                     }
+                                                    quantityAvailable
                                                     product {
                                                         title
                                                         featuredImage {
@@ -307,6 +310,104 @@ export const shopifyCartEndpoints: Endpoint[] = [
                 console.error("Cart update error:", error);
                 return Response.json(
                     { error: error instanceof Error ? error.message : "Failed to update cart" },
+                    { status: 500, headers: corsHeaders }
+                );
+            }
+        }
+    },
+    {
+        path: "/shopify/cart/remove",
+        method: "options",
+        handler: async () => {
+            return new Response(null, { status: 204, headers: corsHeaders });
+        }
+    },
+    {
+        path: "/shopify/cart/remove",
+        method: "post",
+        handler: async (req) => {
+            try {
+                if (!req.json) {
+                    return Response.json(
+                        { error: "Invalid request" },
+                        { status: 400, headers: corsHeaders }
+                    );
+                }
+                const body = await req.json();
+                const { cartId, lineIds } = body;
+
+                if (!cartId) {
+                    return Response.json(
+                        { error: "Cart ID is required" },
+                        { status: 400, headers: corsHeaders }
+                    );
+                }
+
+                if (!lineIds || !Array.isArray(lineIds)) {
+                    return Response.json(
+                        { error: "Line IDs array is required" },
+                        { status: 400, headers: corsHeaders }
+                    );
+                }
+
+                const data = await shopifyQuery(`
+                    mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+                        cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+                            cart {
+                                id
+                                checkoutUrl
+                                lines(first: 10) {
+                                    edges {
+                                        node {
+                                            id
+                                            quantity
+                                            merchandise {
+                                                ... on ProductVariant {
+                                                    id
+                                                    title
+                                                    priceV2 {
+                                                        amount
+                                                        currencyCode
+                                                    }
+                                                    quantityAvailable
+                                                    product {
+                                                        title
+                                                        featuredImage {
+                                                            url
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                cost {
+                                    totalAmount {
+                                        amount
+                                        currencyCode
+                                    }
+                                }
+                            }
+                            userErrors {
+                                field
+                                message
+                            }
+                        }
+                    }
+                `, { cartId, lineIds });
+
+                if (data?.cartLinesRemove?.userErrors?.length > 0) {
+                    return Response.json(
+                        { error: data.cartLinesRemove.userErrors[0].message },
+                        { status: 400, headers: corsHeaders }
+                    );
+                }
+
+                return Response.json(data.cartLinesRemove.cart, { headers: corsHeaders });
+            } catch (error) {
+                console.error("Cart remove error:", error);
+                return Response.json(
+                    { error: error instanceof Error ? error.message : "Failed to remove from cart" },
                     { status: 500, headers: corsHeaders }
                 );
             }

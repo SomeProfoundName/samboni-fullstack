@@ -12,6 +12,7 @@ export interface ShopifyVariant {
     id: string;
     title: string;
     availableForSale: boolean;
+    quantityAvailable: number;
 }
 
 export interface ShopifyProduct {

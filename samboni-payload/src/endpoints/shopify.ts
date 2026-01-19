@@ -176,6 +176,7 @@ export const shopifyEndpoints: Endpoint[] = [
                                                     id
                                                     title
                                                     availableForSale
+                                                    quantityAvailable
                                                 }
                                             }
                                         }

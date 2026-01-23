@@ -1,12 +1,65 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 
-* {
+
+@plugin "daisyui/theme" {
+  name: "Samboni";
+  default: true;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: #FFCD00;
+  --color-base-200: #FFEB99;
+  --color-base-300: #FFFBEB;
+  --color-base-content: oklch(0.0% 0.003 0.000);
+  --color-primary: #C8102E;
+  --color-primary-content: oklch(0.0% 0.370 360.000);
+  --color-secondary: #003087;
+  --color-secondary-content: oklch(88.1% 0.000 360.000);
+  --color-accent: #261303;
+  --color-accent-content: oklch(100.0% 0.000 61.600);
+  --color-neutral: #ECE2D0;
+  --color-neutral-content: oklch(0.0% 0.000 0.000);
+  --color-info: oklch(70% 0.165 254.624);
+  --color-info-content: oklch(28% 0.091 267.935);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(26% 0.051 172.552);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(27% 0.077 45.635);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 0.25rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 1;
+}
+
+h1{
     font-family: Fraunces;
+    font-style: italic;
+    font-weight: 900;
+}
+
+h2{
+    font-family: Fraunces;
+    font-weight: 300;
+}
+
+p{
+  font-family: Fraunces;
+}
+
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  padding: 0 1rem;
 }
 
 
-.container {
-     margin: 0 4rem;
+@utility title {
+  font-size: 2rem;
 }

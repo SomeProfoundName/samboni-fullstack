@@ -15,25 +15,29 @@ const collections = await getShopifyCollections();
 const collectionProducts: Record<string, ShopifyProduct[]> = {};
 for (const collection of collections) {
   collectionProducts[collection.handle] = await getCollectionProducts(
-    collection.handle
+    collection.handle,
   );
 }
 ---
 
-<section class="w-screen h-screen bg-green">
+<section class="w-screen h-auto top-spacing" id="Store">
   <div class="container">
-    <h1 class="text-2xl sm:text-2xl md:text-6xl">Store</h1>
-    <hr class="mx-1"/>
+    <h1 class="text-2xl sm:text-2xl md:text-6xl border-b pb-2">Store</h1>
 
-    <div role="tablist" class="tabs tabs-border">
+    <div class="w-full h-80 top-spacing relative">
+      <p class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-base-content text-4xl font-black text-nowrap ">SHOP SAMBONI'S SELECTION OF COFFEE</p>
+      <img src="/images/samboni-coffee.png" class="w-full h-full object-cover border-4 border-base-300" alt="" />
+    </div>
+
+    <div role="tablist" class="tabs tabs-border mt-1">
       {
         collections.map((collection: ShopifyCollection, index: number) => (
           <a
             role="tab"
-            class={index === 0 ? "tab tab-active" : "tab"}
+            class={index === 0 ? "tab tab-active " : "tab"} 
             data-handle={collection.handle}
           >
-            {collection.title}
+            {collection.title} 
           </a>
         ))
       }
@@ -67,6 +71,7 @@ for (const collection of collections) {
                     variantId={variantId}
                     availableForSale={availableForSale}
                     quantityAvailable={quantityAvailable}
+                    handle={product.handle}
                   />
                 );
               })

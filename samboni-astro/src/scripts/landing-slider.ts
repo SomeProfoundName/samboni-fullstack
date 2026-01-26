@@ -27,3 +27,6 @@
 			currentSlide = 0;
 		}
 	});
+
+	//need to add div with id slider back if you want to reintroduce the slideing about animation
+	

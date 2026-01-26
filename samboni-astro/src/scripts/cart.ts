@@ -31,7 +31,7 @@
                 <div class="flex flex-col gap-1">
                   <div class="flex gap-2 items-center">
                     ${quantity === 1
-                      ? `<button class="btn btn-xs sm:btn-sm rounded-full btn-error text-white remove-item" data-line-id="${lineId}">Remove from cart</button>`
+                      ? `<button class="btn btn-xs sm:btn-sm rounded-full btn-error text-white remove-item" data-line-id="${lineId}"><img src="/icons/bin.svg" alt="Remove" width="16" height="16" /></button>`
                       : `<button class="btn btn-xs sm:btn-sm rounded-full btn-primary quantity-decrease" data-line-id="${lineId}">-</button>`
                     }
                     <p class="quantity-display min-w-6 text-center font-semibold">${quantity}</p>

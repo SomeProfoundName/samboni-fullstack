@@ -38,6 +38,16 @@
   --noise: 1;
 }
 
+html {
+    @apply bg-base-200;
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply bg-base-200;
+    background-color: oklch(var(--b2)) !important;
+}
+
 h1{
     font-family: Fraunces;
     font-style: italic;
@@ -59,7 +69,24 @@ p{
   padding: 0 1rem;
 }
 
+@utility nav-spacing {
+  @apply mt-25
+}
+
+
+@utility top-spacing {
+  @apply mt-4
+}
+
+@utility bot-spacing {
+  @apply mb-4
+}
+
 
 @utility title {
   font-size: 2rem;
+}
+
+@utility nav-button {
+  @apply btn btn-ghost rounded-none border-0 border-accent active:scale-100 
 }

@@ -1,3 +1,9 @@
+---
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -8,7 +14,14 @@
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<Nav />
 		<slot />
+		<Footer />
 	</body>
 </html>
+
+<script>
+	import { initHashNavigation } from '../util/hashNavigation';
+	initHashNavigation();
+</script>
 

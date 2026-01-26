@@ -130,6 +130,80 @@ export const shopifyEndpoints: Endpoint[] = [
         }
     },
     {
+        path: "/shopify/products/slug/:slug",
+        method: "options",
+        handler: async () => {
+            return new Response(null, { status: 204, headers: corsHeaders });
+        }
+    },
+    {
+        path: "/shopify/products/slug/:slug",
+        method: "get",
+        handler: async (req) => {
+            try {
+                const slug = req.routeParams?.slug;
+
+                if (!slug) {
+                    return Response.json(
+                        { error: "Product slug is required" },
+                        { status: 400, headers: corsHeaders }
+                    );
+                }
+
+                const data = await shopifyQuery(`
+                    query($handle: String!) {
+                        product(handle: $handle) {
+                            id
+                            title
+                            handle
+                            description
+                            descriptionHtml
+                            priceRange {
+                                minVariantPrice {
+                                    amount
+                                    currencyCode
+                                }
+                            }
+                            variants(first: 10) {
+                                edges {
+                                    node {
+                                        id
+                                        title
+                                        availableForSale
+                                        quantityAvailable
+                                    }
+                                }
+                            }
+                            images(first: 5) {
+                                edges {
+                                    node {
+                                        url
+                                        altText
+                                    }
+                                }
+                            }
+                        }
+                    }
+                `, { handle: slug });
+
+                if (!data?.product) {
+                    return Response.json(
+                        { error: "Product not found" },
+                        { status: 404, headers: corsHeaders }
+                    );
+                }
+
+                return Response.json(data.product, { headers: corsHeaders });
+            } catch (error) {
+                console.error("Product slug error:", error);
+                return Response.json(
+                    { error: error instanceof Error ? error.message : "Failed to fetch product" },
+                    { status: 500, headers: corsHeaders }
+                );
+            }
+        }
+    },
+    {
         path: "/shopify/collections/:handle/products",
         method: "options",
         handler: async () => {

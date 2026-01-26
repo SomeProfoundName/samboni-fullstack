@@ -1,0 +1,25 @@
+<div class="drawer drawer-end bg-base-200 min-h-screen">
+  <input id="my-drawer-5" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content bg-base-200 min-h-screen">
+        <slot />
+  </div>
+  <div class="drawer-side z-200">
+    <label for="my-drawer-5" aria-label="close sidebar" class="drawer-overlay bg-opacity-50"></label>
+    <div class="bg-base-300 min-h-full w-1/2 p-4 flex flex-col">
+      <h1 class="text-2xl font-bold">CART</h1>
+      <hr class="my-4" />
+
+      <div id="cart-items" class="flex-1 overflow-y-auto">
+        <p class="text-center text-gray-500">Loading cart...</p>
+      </div>
+      <hr />
+      <div id="cart-total" class="mt-4 mb-2 text-xl font-bold hidden">
+        Total: <span id="total-amount">$0.00</span>
+      </div>
+
+      <a id="checkout-btn" href="#" class="btn btn-primary w-full hidden">CHECKOUT</a>
+    </div>
+  </div>
+</div>
+
+<script src="../scripts/cart.ts"></script>

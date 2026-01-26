@@ -1,8 +1,8 @@
 ---
-const {title, image, description, imageAlt, variantId, availableForSale = true, quantityAvailable = 0} = Astro.props
+const {title, image, description, imageAlt, variantId, availableForSale = true, quantityAvailable = 0, handle} = Astro.props
 ---
 
-<div class="card bg-base-100 shadow-sm h-full flex flex-col">
+<div class="card bg-base-300 shadow-sm h-full flex flex-col border-4 border-base-300">
   <figure class="aspect-square overflow-hidden">
     <img
       class="w-full h-full object-cover"
@@ -18,12 +18,15 @@ const {title, image, description, imageAlt, variantId, availableForSale = true, 
         Stock: <span class={quantityAvailable <= 5 ? 'text-warning font-semibold' : 'text-success'}>{quantityAvailable} available</span>
       </p>
     )}
+    <div class="flex gap-2">
+    <a href={`/products/${handle}`} class="btn btn-sm btn-success">Learn More</a>
       <button
-        class={`btn btn-sm ${availableForSale ? 'btn-primary' : 'btn-neutral pointer-events-none'} add-to-cart-btn`}
+        class={`btn btn-sm ${availableForSale ? 'btn-info' : 'btn-neutral pointer-events-none'} add-to-cart-btn`}
         data-variant-id={variantId}
         disabled={!availableForSale}>
         {availableForSale ? 'Add to Cart' : 'Out of Stock'}
       </button>
+      </div>
     </div>
   </div>
 </div>

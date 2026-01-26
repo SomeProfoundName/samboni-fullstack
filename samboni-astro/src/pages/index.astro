@@ -1,13 +1,16 @@
 ---
 import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
+import CartDrawerContainer from "../layouts/CartDrawerContainer.astro";
 import Welcome from "../components/Welcome.astro";
-import Store from "../components/Store.astro"
-import CartDrawer from "../components/CartDrawer.astro"
-
-
+import Store from "../components/Store.astro";
 ---
 
 <Layout>
-    <CartDrawer />
+    <CartDrawerContainer>
+        <section class="w-screen h-screen bg-base-200 relative before:w-screen before:absolute before:inset-0 before:bg-[url('/pattern.png')] before:bg-repeat before:bg-size-[100px_100px] before:mix-blend-soft-light before:opacity-70">
+            <Welcome />
+        </section>
+        <Store />
+    </CartDrawerContainer>
 </Layout>

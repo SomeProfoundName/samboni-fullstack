@@ -56,11 +56,14 @@ h1{
 
 h2{
     font-family: Fraunces;
-    font-weight: 300;
 }
 
 p{
   font-family: Fraunces;
+}
+
+.nav-button{
+  padding: 0;
 }
 
 @utility container {

@@ -1,0 +1,28 @@
+---
+import Nav from './Nav.astro';
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<header class="relative w-full overflow-hidden">
+    <div class="h-auto bg-accent text-white">
+    <Nav />
+  <div class="h-30 bg-accent flex justify-center items-center">
+    <h2 class="text-3xl md:text-5xl font-['Fraunces'] font-black text-white">
+      {title}
+    </h2>
+  </div>
+  </div>
+  <svg viewBox="0 0 1000 50" class="w-full h-auto block fill-accent" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 21L15.2 20.3C30.3 19.7 60.7 18.3 91 19.2C121.3 20 151.7 23 182 25.2C212.3 27.3 242.7 28.7 273 28.2C303.3 27.7 333.7 25.3 364 25.2C394.3 25 424.7 27 454.8 26.3C485 25.7 515 22.3 545.2 22.2C575.3 22 605.7 25 636 26C666.3 27 696.7 26 727 26.2C757.3 26.3 787.7 27.7 818 26.5C848.3 25.3 878.7 21.7 909 20.7C939.3 19.7 969.7 21.3 984.8 22.2L1000 23L1000 0L984.8 0C969.7 0 939.3 0 909 0C878.7 0 848.3 0 818 0C787.7 0 757.3 0 727 0C696.7 0 666.3 0 636 0C605.7 0 575.3 0 545.2 0C515 0 485 0 454.8 0C424.7 0 394.3 0 364 0C333.7 0 303.3 0 273 0C242.7 0 212.3 0 182 0C151.7 0 121.3 0 91 0C60.7 0 30.3 0 15.2 0L0 0Z" />
+  </svg>
+</header>
+
+<!-- <style>
+  header :global(.navbar) {
+    border-color: white;
+  }
+</style> -->

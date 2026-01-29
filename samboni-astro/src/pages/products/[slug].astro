@@ -4,6 +4,8 @@ import Layout from "../../layouts/Layout.astro";
 import CartDrawerContainer from "../../layouts/CartDrawerContainer.astro";
 import { getShopifyCollections } from "../../util/getShopifyCollections";
 import { getCollectionProducts } from "../../util/getCollectionProducts";
+import Header from "../../components/Header.astro";
+import LayoutTwo from "../../layouts/LayoutTwo.astro";
 
 export async function getStaticPaths() {
   const collections = await getShopifyCollections();
@@ -32,12 +34,13 @@ if(!response.ok) {
 const product = await response.json()
 ---
 
-<Layout>
+<LayoutTwo>
+  <Header title="COFFEE"/>
  <CartDrawerContainer>
-      <main class="container nav-spacing">
-    <div class="grid md:grid-cols-2 gap-8">
+      <main class="container">
+    <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
       <!-- Product Image -->
-      <div>
+      <div class="order-2">
         <img
           src={product.images?.edges?.[0]?.node?.url}
           alt={product.images?.edges?.[0]?.node?.altText || product.title}
@@ -46,20 +49,21 @@ const product = await response.json()
       </div>
 
       <!-- Product Details -->
-      <div>
+      <div class="order-1 md:order-2">
         <h1 class="text-3xl font-bold mb-4">{product.title}</h1>
         <p class="text-2xl text-gray-700 mb-4">
           £{product.priceRange?.minVariantPrice?.amount}
         </p>
-        <div class="prose mb-6" set:html={product.descriptionHtml} />
-
-        <button
-          class="btn btn-info add-to-cart-btn"
-          data-variant-id={product.variants?.edges?.[0]?.node?.id}>
-          Add to Cart
-        </button>
       </div>
+
+      <div class="order-3">
+        <div class="prose mb-6" set:html={product.descriptionHtml}>
+        </div>
+            <button class="btn btn-info add-to-cart-btn"
+            data-variant-id={product.variants?.edges?.[0]?.node?.id}>
+            Add to Cart
+          </button>
     </div>
   </main>
  </CartDrawerContainer>
-</Layout>
+</LayoutTwo>

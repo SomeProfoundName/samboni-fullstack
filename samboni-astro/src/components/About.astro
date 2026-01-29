@@ -1,18 +1,53 @@
 ---
 
 ---
-<div class="container flex flex-col justify-center items-center min-h-screen">
-    <div id="about-container" class="container py-10 md:py-0 flex flex-col items-center justify-center">
-        <h1 class="lg:text-4xl md:text-2xl sm:text-xl text-white drop-shadow-[3px_3px_0px_#C8102E] text-center mb-8 md:mb-10">ABOUT</h1>
-        <div class="w-full flex flex-col justify-center gap-8 md:gap-10">
-            <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
-                <video class="w-full md:w-1/2 lg:w-2/5 aspect-video outline-4 md:outline-8 outline-white rotate-2 object-cover shrink-0" src="/videos/1000003161.mp4" autoplay loop muted playsinline></video>
-                <p class="text-sm sm:text-base md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tellus vel sapien vestibulum, eget pretium libero porta. Phasellus consectetur molestie tempus. Vestibulum quis hendrerit massa. Ut purus magna, auctor ut aliquet eu, iaculis in libero. In accumsan iaculis ante, et pellentesque metus iaculis quis. </p>
-            </div>
-            <div class="flex flex-col-reverse md:flex-row gap-6 md:gap-10 items-center">
-                <p class="text-sm sm:text-base md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tellus vel sapien vestibulum, eget pretium libero porta. Phasellus consectetur molestie tempus. Vestibulum quis hendrerit massa. Ut purus magna, auctor ut aliquet eu, iaculis in libero. In accumsan iaculis ante, et pellentesque metus iaculis quis. </p>
-                <video class="w-full md:w-1/2 lg:w-2/5 aspect-video outline-4 md:outline-8 outline-white -rotate-2 object-cover shrink-0" src="/videos/1000003225.mp4" autoplay loop muted playsinline></video>
-            </div>
+
+<section
+  class="container flex flex-col justify-center items-center min-h-screen nav-spacing"
+>
+  <div class="py-10">
+    <div
+      id="about-container"
+      class="container py-10 md:py-0 flex flex-col items-center justify-center"
+    >
+      <h1
+        class="text-2xl md:text-4xl lg:text-6xl xl:text-7xl text-white drop-shadow-[3px_3px_0px_#C8102E] text-center mb-8 md:mb-10"
+      >
+        About Samboni
+      </h1>
+      <div
+        class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center"
+      >
+        <!-- Left column: Videos -->
+        <div class="flex flex-col gap-8 md:gap-12 items-center">
+          <video
+            class="w-full aspect-video outline-4 md:outline-8 outline-white rotate-2 object-cover"
+            src="/videos/1000003161.mp4"
+            autoplay
+            loop
+            muted
+            playsinline></video>
+          <video
+            class="w-full aspect-video outline-4 md:outline-8 outline-white -rotate-2 object-cover"
+            src="/videos/1000003225.mp4"
+            autoplay
+            loop
+            muted
+            playsinline></video>
         </div>
+        <!-- Right column: Text -->
+        <div class="flex flex-col gap-8 md:gap-10">
+          <p class="text-sm sm:text-base md:text-lg font-bold line-clamp-6">
+            Samboni is a premium, single-farm coffee grown at a precise altitude
+            of 1,750 meters above sea level. Our beans are of the prized
+            "Variedad Colombia Supremo" and cultivated using traditional farming
+            practices passed down through generations. The result is a rich,
+            fruity flavor with notes of sugarcane, a smooth yet bold aroma, and
+            an uplifting effect with every sip. To drink Samboni is to taste the
+            essence of Colombia in a cup.
+          </p>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>

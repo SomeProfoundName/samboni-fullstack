@@ -44,8 +44,21 @@ html {
 }
 
 body {
-    @apply bg-base-200;
+    @apply bg-base-200 relative;
     background-color: oklch(var(--b2)) !important;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('/bean-inside.png');
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    mix-blend-mode: soft-light;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
 }
 
 h1{
@@ -59,6 +72,15 @@ h2{
     font-weight: 300;
 }
 
+h3{
+    font-family: Fraunces;
+    @apply text-base-content;
+}
+
+button, a {
+  @apply font-[Fraunces] 
+}
+
 p{
   font-family: Fraunces;
 }
@@ -70,7 +92,7 @@ p{
 }
 
 @utility nav-spacing {
-  @apply mt-25
+  @apply pt-20
 }
 
 

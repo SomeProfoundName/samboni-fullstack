@@ -2,8 +2,11 @@
 import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import AboutComponent from "../components/About.astro";
+import CartDrawerContainer from "../layouts/CartDrawerContainer.astro";
 ---
 
 <Layout>
-    <AboutComponent />
+    <CartDrawerContainer>
+        <AboutComponent />
+    </CartDrawerContainer>
 </Layout>

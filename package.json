@@ -3,6 +3,6 @@
 		"concurrently": "^9.2.1"
 	},
 	"scripts": {
-		"dev": "concurrently \"cd samboni-payload && pnpm dev\" \"cd samboni-astro && pnpm dev\""
+		"dev": "concurrently \"pnpm -C samboni-payload dev\" \"pnpm -C samboni-astro dev\""
 	}
 }

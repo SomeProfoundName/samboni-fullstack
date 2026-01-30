@@ -73,7 +73,6 @@ h2{
 
 h3{
     font-family: Fraunces;
-    @apply text-base-content;
 }
 
 button, a {
@@ -82,10 +81,6 @@ button, a {
 
 p{
   font-family: Fraunces;
-}
-
-.nav-button{
-  padding: 0;
 }
 
 @utility container {
@@ -113,5 +108,6 @@ p{
 }
 
 @utility nav-button {
-  @apply btn btn-ghost rounded-none border-0 border-accent active:scale-100 
+  @apply btn btn-ghost px-[5px] rounded-none border-0 border-b-transparent border-b-2 hover:border-b-accent hover:bg-transparent active:scale-100;
+  --noise: 0;
 }

@@ -1,12 +1,14 @@
 ---
 import "../styles/global.css";
-import Layout from "../layouts/Layout.astro";
 import AboutComponent from "../components/About.astro";
 import CartDrawerContainer from "../layouts/CartDrawerContainer.astro";
+import LayoutTwo from "../layouts/LayoutTwo.astro";
+import Header from "../components/Header.astro";
 ---
 
-<Layout>
+<LayoutTwo>
+    <Header title="About Samboni"/>
     <CartDrawerContainer>
         <AboutComponent />
     </CartDrawerContainer>
-</Layout>
+</LayoutTwo>

@@ -218,8 +218,9 @@
     }
 
     // Handle remove item
-    if (target.classList.contains('remove-item')) {
-      const lineId = target.dataset.lineId;
+    const removeButton = target.closest('.remove-item') as HTMLElement | null;
+    if (removeButton) {
+      const lineId = removeButton.dataset.lineId;
       if (!lineId) return;
 
       await removeFromCart(lineId);

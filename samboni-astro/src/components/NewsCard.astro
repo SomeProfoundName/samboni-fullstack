@@ -10,7 +10,7 @@ interface Props {
 const { title, image, imageAlt = title, excerpt, link } = Astro.props;
 ---
 
-<a href={link} class="card md:h-60 md:flex md:flex-row lg:card-side bg-base-300 border-4 border-base-300 hover:border-info transition-colors">
+<a href={link} class="card md:h-60 md:flex md:flex-row lg:card-side bg-base-300 border-4 border-base-300">
   <figure class="w-full h-25 md:h-full md:w-100 shrink-0">
     <img
       src={image || "https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"}
@@ -22,7 +22,7 @@ const { title, image, imageAlt = title, excerpt, link } = Astro.props;
     <h2 class="card-title">{title}</h2>
     {excerpt && <p>{excerpt}</p>}
     <div class="card-actions justify-end">
-      <span class="btn btn-info">Read More</span>
+      <span class="btn btn-info hover:bg-primary hover:border-primary hover:text-base-300 transition:colors">Read More</span>
     </div>
   </div>
 </a>

@@ -1,11 +1,12 @@
 ---
 interface Props {
   content: any;
+  payloadUrl?: string;
 }
 
-const { content } = Astro.props;
+const { content, payloadUrl = import.meta.env.PUBLIC_PAYLOAD_URL } = Astro.props;
 
-function renderNode(node: any): string {
+function renderNode(node: any, baseUrl: string): string {
   if (!node) return '';
 
   // Text node
@@ -20,7 +21,7 @@ function renderNode(node: any): string {
   }
 
   // Get children content
-  const children = node.children?.map((child: any) => renderNode(child)).join('') || '';
+  const children = node.children?.map((child: any) => renderNode(child, baseUrl)).join('') || '';
 
   switch (node.type) {
     case 'root':
@@ -51,7 +52,8 @@ function renderNode(node: any): string {
       return `<blockquote>${children}</blockquote>`;
     case 'upload':
       if (node.value?.url) {
-        return `<img src="${node.value.url}" alt="${node.value.alt || ''}" />`;
+        const imgSrc = node.value.url.startsWith('http') ? node.value.url : `${baseUrl}${node.value.url}`;
+        return `<img src="${imgSrc}" alt="${node.value.alt || ''}" class="rounded-lg my-4" />`;
       }
       return '';
     default:
@@ -59,7 +61,7 @@ function renderNode(node: any): string {
   }
 }
 
-const html = content?.root ? renderNode(content.root) : '';
+const html = content?.root ? renderNode(content.root, payloadUrl || '') : '';
 ---
 
 <Fragment set:html={html} />

@@ -1,0 +1,27 @@
+---
+import NewsCard from "../components/NewsCard.astro";
+import { getArticles } from "../util/getArticles";
+
+const { docs: articles } = await getArticles({ limit: 10 });
+const payloadUrl = import.meta.env.PUBLIC_PAYLOAD_URL;
+---
+
+<section class="flex-1 w-full py-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col gap-6">
+            {articles.length > 0 ? (
+                articles.map((article) => (
+                    <NewsCard
+                        title={article.title}
+                        image={article.coverImage?.url ? `${payloadUrl}${article.coverImage.url}` : undefined}
+                        imageAlt={article.coverImage?.alt}
+                        excerpt={article.excerpt}
+                        link={`/news/${article.slug}`}
+                    />
+                ))
+            ) : (
+                <p class="text-center text-base-content/60">No articles found.</p>
+            )}
+        </div>
+    </div>
+</section>

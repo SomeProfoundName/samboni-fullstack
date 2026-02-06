@@ -1,0 +1,57 @@
+---
+import "../../styles/global.css";
+import LayoutTwo from "../../layouts/LayoutTwo.astro";
+import Header from "../../components/Header.astro";
+import RichText from "../../components/RichText.astro";
+import { getArticles, getArticleBySlug } from "../../util/getArticles";
+import CartDrawerContainer from "../../layouts/CartDrawerContainer.astro";
+
+export async function getStaticPaths() {
+    const { docs: articles } = await getArticles({ limit: 100 });
+    return articles.map((article) => ({
+        params: { slug: article.slug },
+    }));
+}
+
+const { slug } = Astro.params;
+const article = await getArticleBySlug(slug as string);
+const payloadUrl = import.meta.env.PUBLIC_PAYLOAD_URL;
+
+if (!article) {
+    return Astro.redirect('/news');
+}
+---
+
+<LayoutTwo>
+    <CartDrawerContainer> 
+        <Header title={article.title} />
+        <article class="flex-1 w-full py-8">
+            <div class="container mx-auto px-4 max-w-4xl">
+                {article.coverImage && (
+                    <figure class="mb-8">
+                        <img
+                            src={`${payloadUrl}${article.coverImage.url}`}
+                            alt={article.coverImage.alt}
+                            class="w-full h-80 object-cover rounded-lg"
+                        />
+                    </figure>
+                )}
+                {article.publishedAt && (
+                    <p class="text-base-content/60 mb-4">
+                        {new Date(article.publishedAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}
+                    </p>
+                )}
+                {article.excerpt && (
+                    <p class="text-lg text-base-content/80 mb-8 italic">{article.excerpt}</p>
+                )}
+                <div class="prose prose-lg max-w-none">
+                    <RichText content={article.content} />
+                </div>
+            </div>
+        </article>
+    </CartDrawerContainer>
+</LayoutTwo>

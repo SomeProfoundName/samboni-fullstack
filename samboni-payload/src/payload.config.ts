@@ -30,18 +30,9 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  // cors: [
-  //   'http://localhost:4321',
-  //   'http://localhost:4322',
-  //   'http://localhost:4323',
-  //   process.env.FRONTEND_URL || '',
-  // ].filter(Boolean),
-  // csrf: [
-  //   'http://localhost:4321',
-  //   'http://localhost:4322',
-  //   'http://localhost:4323',
-  //   process.env.FRONTEND_URL || '',
-  // ].filter(Boolean),
+  cors: process.env.NODE_ENV === 'production'
+    ? [process.env.FRONTEND_URL].filter(Boolean) as string[]
+    : '*',
   endpoints: [
     ...shopifyEndpoints,
     ...shopifyCartEndpoints,

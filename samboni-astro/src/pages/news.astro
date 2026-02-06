@@ -1,11 +1,15 @@
 ---
 import "../styles/global.css";
-import AboutComponent from "../components/About.astro";
 import CartDrawerContainer from "../layouts/CartDrawerContainer.astro";
 import LayoutTwo from "../layouts/LayoutTwo.astro";
 import Header from "../components/Header.astro";
+import NewsArea from "../sections/NewsArea.astro";
 ---
 
 <LayoutTwo>
-    <Header title="News"/>
+    <CartDrawerContainer>
+        <Header title="News"/>
+        <NewsArea />
+    </CartDrawerContainer>
+
 </LayoutTwo>

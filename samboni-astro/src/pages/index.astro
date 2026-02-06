@@ -2,15 +2,15 @@
 import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import CartDrawerContainer from "../layouts/CartDrawerContainer.astro";
-import Welcome from "../components/Welcome.astro";
-import Store from "../components/Store.astro";
+import WelcomeArea from "../sections/WelcomeArea.astro";
+import StoreArea from "../sections/StoreArea.astro";
 ---
 
 <Layout>
     <CartDrawerContainer>
         <section class="w-full h-screen">
-            <Welcome />
+            <WelcomeArea />
         </section>
-        <Store />
+        <StoreArea />
     </CartDrawerContainer>
 </Layout>

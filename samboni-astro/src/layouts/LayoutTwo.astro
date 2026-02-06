@@ -13,8 +13,10 @@ import Nav from "../components/Nav.astro";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 	</head>
-	<body>
-		<slot />
+	<body class="min-h-screen flex flex-col">
+		<main class="flex-1 flex flex-col">
+			<slot />
+		</main>
 		<Footer />
 	</body>
 </html>

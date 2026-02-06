@@ -18,10 +18,10 @@ const {title, image, description, imageAlt, variantId, availableForSale = true, 
         Stock: <span class={quantityAvailable <= 5 ? 'text-warning font-semibold' : 'text-success'}>{quantityAvailable} available</span>
       </p>
     )}
-    <div class="flex gap-2">
-    <a href={`/products/${handle}`} class="btn btn-sm btn-success">Learn More</a>
+    <div class="flex flex-col md:flex-row gap-2">
+    <a href={`/products/${handle}`} class="btn btn-xs md:btn-sm btn-success">Learn More</a>
       <button
-        class={`btn btn-sm ${availableForSale ? 'btn-info' : 'btn-neutral pointer-events-none'} add-to-cart-btn`}
+        class={`btn btn-xs md:btn-sm ${availableForSale ? 'btn-info' : 'btn-neutral pointer-events-none'} add-to-cart-btn`}
         data-variant-id={variantId}
         disabled={!availableForSale}>
         {availableForSale ? 'Add to Cart' : 'Out of Stock'}

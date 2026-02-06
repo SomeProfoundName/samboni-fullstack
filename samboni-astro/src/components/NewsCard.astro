@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  image?: string;
+  imageAlt?: string;
+  excerpt?: string;
+  link: string;
+}
+
+const { title, image, imageAlt = title, excerpt, link } = Astro.props;
+---
+
+<a href={link} class="card md:h-60 md:flex md:flex-row lg:card-side bg-base-300 border-4 border-base-300 hover:border-info transition-colors">
+  <figure class="w-full h-25 md:h-full md:w-100 shrink-0">
+    <img
+      src={image || "https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"}
+      alt={imageAlt}
+      class="w-full h-full object-cover"
+      />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">{title}</h2>
+    {excerpt && <p>{excerpt}</p>}
+    <div class="card-actions justify-end">
+      <span class="btn btn-info">Read More</span>
+    </div>
+  </div>
+</a>

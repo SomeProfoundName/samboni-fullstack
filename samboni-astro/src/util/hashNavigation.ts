@@ -6,7 +6,7 @@ export function initHashNavigation() {
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        }, 10);
       }
     });
   }

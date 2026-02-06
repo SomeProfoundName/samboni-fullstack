@@ -1,0 +1,65 @@
+---
+interface Props {
+  content: any;
+}
+
+const { content } = Astro.props;
+
+function renderNode(node: any): string {
+  if (!node) return '';
+
+  // Text node
+  if (node.type === 'text') {
+    let text = node.text || '';
+    if (node.format & 1) text = `<strong>${text}</strong>`; // bold
+    if (node.format & 2) text = `<em>${text}</em>`; // italic
+    if (node.format & 4) text = `<s>${text}</s>`; // strikethrough
+    if (node.format & 8) text = `<u>${text}</u>`; // underline
+    if (node.format & 16) text = `<code>${text}</code>`; // code
+    return text;
+  }
+
+  // Get children content
+  const children = node.children?.map((child: any) => renderNode(child)).join('') || '';
+
+  switch (node.type) {
+    case 'root':
+      return children;
+    case 'paragraph':
+      return `<p class="mb-6">${children}</p>`;
+    case 'heading':
+      const level = node.tag?.replace('h', '') || '2';
+      const headingClasses: Record<string, string> = {
+        '1': 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 mt-6 md:mt-8',
+        '2': 'text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-5 mt-5 md:mt-7',
+        '3': 'text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-3 md:mb-4 mt-4 md:mt-6',
+        '4': 'text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-2 md:mb-3 mt-3 md:mt-5',
+        '5': 'text-base sm:text-lg md:text-lg font-medium mb-2 mt-3 md:mt-4',
+        '6': 'text-sm sm:text-base md:text-base font-medium mb-2 mt-3 md:mt-4',
+      };
+      return `<h${level} class="${headingClasses[level] || headingClasses['2']}">${children}</h${level}>`;
+    case 'list':
+      const listTag = node.listType === 'number' ? 'ol' : 'ul';
+      return `<${listTag}>${children}</${listTag}>`;
+    case 'listitem':
+      return `<li>${children}</li>`;
+    case 'link':
+      const rel = node.fields?.newTab ? 'noopener noreferrer' : '';
+      const target = node.fields?.newTab ? '_blank' : '';
+      return `<a href="${node.fields?.url || '#'}" ${target ? `target="${target}"` : ''} ${rel ? `rel="${rel}"` : ''}>${children}</a>`;
+    case 'quote':
+      return `<blockquote>${children}</blockquote>`;
+    case 'upload':
+      if (node.value?.url) {
+        return `<img src="${node.value.url}" alt="${node.value.alt || ''}" />`;
+      }
+      return '';
+    default:
+      return children;
+  }
+}
+
+const html = content?.root ? renderNode(content.root) : '';
+---
+
+<Fragment set:html={html} />

@@ -2,6 +2,7 @@ export interface NavItem {
   label: string;
   link: string;
   openInNewTab?: boolean;
+  showOnSite?: boolean
 }
 
 export interface Navigation {
@@ -25,7 +26,7 @@ export async function getNavigation(): Promise<Navigation> {
     return {
       brandName: data.brandName || 'Samboni',
       brandLink: data.brandLink || '/',
-      navItems: data.navItems || [],
+      navItems: (data.navItems || []).filter((item: NavItem) => item.showOnSite),
     };
   } catch (error) {
     console.error("Error fetching navigation:", error);

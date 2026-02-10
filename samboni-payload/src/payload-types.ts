@@ -91,9 +91,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     navigation: Navigation;
+    'about-page': AboutPage;
+    'faq-page': FaqPage;
   };
   globalsSelect: {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
+    'faq-page': FaqPageSelect<false> | FaqPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -381,6 +385,70 @@ export interface Navigation {
         label: string;
         link: string;
         openInNewTab?: boolean | null;
+        showOnSite?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: string;
+  /**
+   * Paths to video files in /public/videos/
+   */
+  videos?:
+    | {
+        path?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq-page".
+ */
+export interface FaqPage {
+  id: string;
+  faqItems?:
+    | {
+        question: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
         id?: string | null;
       }[]
     | null;
@@ -400,6 +468,39 @@ export interface NavigationSelect<T extends boolean = true> {
         label?: T;
         link?: T;
         openInNewTab?: T;
+        showOnSite?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  videos?:
+    | T
+    | {
+        path?: T;
+        id?: T;
+      };
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq-page_select".
+ */
+export interface FaqPageSelect<T extends boolean = true> {
+  faqItems?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
         id?: T;
       };
   updatedAt?: T;

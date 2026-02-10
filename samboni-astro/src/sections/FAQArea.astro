@@ -1,0 +1,11 @@
+---
+import { getFaqPage } from '../util/getFaqPage';
+import Accordion from '../components/Accordion.astro';
+
+const { faqItems } = await getFaqPage();
+---
+
+<section class="container py-10">
+  <h2 class="bot-spacing text-center text-xl md:text-2xl font-bold text-accent uppercase">For general question on Samboni or regarding shippings and returns, please refer to the sections down below.</h2>
+  <Accordion items={faqItems} name="faq-accordion" />
+</section>

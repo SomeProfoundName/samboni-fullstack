@@ -1,3 +1,4 @@
+import { lexicalEditor, FixedToolbarFeature } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
 export const Articles: CollectionConfig = {
@@ -36,6 +37,9 @@ export const Articles: CollectionConfig = {
       name: 'content',
       type: 'richText',
       required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
+      })
     },
     {
       name: 'publishedAt',

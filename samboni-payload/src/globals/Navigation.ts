@@ -40,6 +40,11 @@ export const Navigation: GlobalConfig = {
           type: 'checkbox',
           defaultValue: false,
         },
+        {
+          name: 'showOnSite',
+          type: 'checkbox',
+          defaultValue: false,
+        }
       ],
     },
   ],

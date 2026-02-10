@@ -5,11 +5,16 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+//COLLECTION AND PAGE IMPORTS
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Articles } from './collections/Articles'
 import { Navigation } from './globals/Navigation'
+import { AboutPage } from './globals/AboutPage'
+import { FaqPage } from './globals/FaqPage'
 
+
+//ENDPOINTS
 import { shopifyEndpoints } from './endpoints/shopify'
 import { shopifyCartEndpoints } from './endpoints/shopifyCart'
 
@@ -24,7 +29,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Articles],
-  globals: [Navigation],
+  globals: [Navigation, AboutPage, FaqPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -1,0 +1,31 @@
+---
+import RichText from './RichText.astro';
+
+interface AccordionItem {
+  question: string;
+  answer: any;
+}
+
+interface Props {
+  items: AccordionItem[];
+  name?: string;
+}
+
+const { items, name = 'accordion' } = Astro.props;
+---
+
+<div class="mx-auto">
+  {items.map((item, index) => (
+    <div class="collapse collapse-arrow bg-base-300 mb-2">
+      <input type="radio" name={name} checked={index === 0} />
+      <div class="collapse-title text-lg font-bold font-['Fraunces'] text-accent">
+        {item.question}
+      </div>
+      <div class="collapse-content">
+        <div class="prose">
+          <RichText content={item.answer} />
+        </div>
+      </div>
+    </div>
+  ))}
+</div>

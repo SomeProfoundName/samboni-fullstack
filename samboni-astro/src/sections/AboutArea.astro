@@ -1,5 +1,10 @@
 ---
+import { getAboutPage } from '../util/getAboutPage';
+import RichText from '../components/RichText.astro';
 
+const { videos, content } = await getAboutPage();
+const video1 = videos[0]?.path || '/videos/video1.mp4';
+const video2 = videos[1]?.path || '/videos/video2.mp4';
 ---
 
 <section class="w-full h-full bg-base-300">
@@ -21,18 +26,16 @@
             loop
             playsinline
             class="w-full h-full object-cover">
-            <source src="/videos/1000003161.mp4" type="video/mp4"/>
+            <source src={video1} type="video/mp4"/>
           </video>
         </div>
       </div>
     </div>
 
     <div class="h-auto my-20">
-      <div class="flex flex-col gap-5 container">
-        <p class="text-center md:text-xl font-bold">Samboni coffee comes from organic and traditional ancient farming practices, harvested at an altitude of 1,750 meters above sea level in the Cauca cordillera ridge of the Colombian Andes. Our small family farms produce a distinctive, highest-quality Arabica bean. Cultivated by families since 1886, our coffee has a long history of excellence that continues to improve.</p>
-        <p class="text-center md:text-xl font-bold">Polyplanted and washed with sugar cane and citrus for a beautiful aroma and soft taste, Samboni delivers the ultimate euphoric boost to start your morning.</p>
+      <div class="flex flex-col gap-5 container prose prose-lg max-w-none text-center md:text-xl font-bold">
+        {content && <RichText content={content} />}
       </div>
-      
     </div>
 
     <div class="relative mb-[-6vw] sm:mb-[-6vw] md:mb-[-4vw]">
@@ -52,7 +55,7 @@
             loop
             playsinline
             class="w-full h-full object-cover">
-            <source src="/videos/1000003225.mp4" type="video/mp4"/>
+            <source src={video2} type="video/mp4"/>
           </video>
         </div>
       </div>
